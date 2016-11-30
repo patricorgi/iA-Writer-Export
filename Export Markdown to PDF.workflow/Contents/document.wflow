@@ -58,13 +58,13 @@
 				
 				(* paths to binaries *)
 				set pandoc to do shell script "PATH=$PATH:/usr/local/bin; echo $(which pandoc)"
-				set pdflatex to do shell script "PATH=$PATH:/usr/texbin:/usr/local/bin:/opt/local/bin:; echo $(which pdflatex)"
+				set xelatex to do shell script "PATH=$PATH:/Library/TeX/texbin; echo $(which xelatex)"
 				
 				if pandoc is equal to "" then (* pandoc not found *)
 					display alert "Pandoc has to be installed on your system for using this service. See http://johnmacfarlane.net/pandoc for more information."
 					
-				else if pdflatex is equal to "" then (* pdflatex not found *)
-					display alert "Could not find pdflatex. If you have pdflatex already installed, create a symlink in /usr/textbin/pdflatex. Otherwise you have to install pdflatex first."
+				else if xelatex is equal to "" then (* xelatex not found *)
+					display alert "Could not find xelatex. You have to install xelatex first."
 					
 				else if (get file of front document) is missing value then (* the document is not yet saved *)
 					display alert "You have to save the document first before exporting to PDF."
@@ -79,7 +79,7 @@
 					else
 						save front document
 						set pdf_file to (quoted form of (do shell script " echo " &amp; md_file &amp; " | sed 's/.md$/.pdf/'"))
-						do shell script pandoc &amp; " " &amp; md_file &amp; " -o " &amp; pdf_file &amp; " --latex-engine=" &amp; pdflatex
+						do shell script pandoc &amp; " " &amp; md_file &amp; " -o " &amp; pdf_file &amp; " --latex-engine=" &amp; xelatex
 						do shell script "open " &amp; pdf_file
 						tell application "Preview" to activate
 					end if
