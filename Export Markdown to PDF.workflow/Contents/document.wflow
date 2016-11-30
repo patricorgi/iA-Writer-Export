@@ -79,7 +79,7 @@
 					else
 						save front document
 						set pdf_file to (quoted form of (do shell script " echo " &amp; md_file &amp; " | sed 's/.md$/.pdf/'"))
-						do shell script pandoc &amp; " " &amp; md_file &amp; " -o " &amp; pdf_file &amp; " --latex-engine=" &amp; xelatex
+						do shell script pandoc &amp; " --template=$HOME/Templates/template.tex --latex-engine=" &amp; xelatex &amp; " " &amp; md_file &amp; " -o " &amp; pdf_file
 						do shell script "open " &amp; pdf_file
 						tell application "Preview" to activate
 					end if
